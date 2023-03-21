@@ -1,0 +1,16 @@
+1. In newest ALiPy version, they have canceled the implementation of BMDR, SPAL and LAL for multi-class classification, if someone really want to run these experiments, please contact me or directly using the ALiPy version before 2020.
+
+2. If someone meet the error about "scipy.sparse.linalg.eigen.arpack.arpack", please revise the code of [your library path]/cvxpy/expressions/constants/constant.py:
+
+from: "from scipy.sparse.linalg.eigen.arpack.arpack import ArpackError"
+to: "from scipy.sparse.linalg import ArpackError"
+
+3. if someone meet the Error report on EER, please revise the code of [your library path]/alipy/query_strategy/query_labels.py line 710
+
+from: score.append(pv[i, yi] * self.log_loss(prob))
+to: score.append(pv[i, int(yi)] * self.log_loss(prob))
+
+If the questions is about multi-class classification tasks: please add new code after line 706
+Add: if min(classes)>0:
+        yi = yi-1
+
